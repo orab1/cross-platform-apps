@@ -1,16 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { AuthProvider, useAuth } from './Providers/auth';
+import AuthNavigator from './Pages/AuthNavigator';
+import UnAuthNavigator from './Pages/UnAuthNavigator';
 import Pages from './Pages';
-import Feed from './Pages/Feed';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
+
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <SafeAreaView style={styles.container}>
-        <Pages />
-      </SafeAreaView>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <AuthProvider>
+            <Pages />
+          </AuthProvider>
+        </SafeAreaView>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
