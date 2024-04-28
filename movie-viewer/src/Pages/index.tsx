@@ -1,13 +1,19 @@
+import { ProgressBar } from "react-native-paper";
 import { useAuth } from "../Providers/auth";
-import AuthNavigator from "./AuthNavigator";
-import UnAuthNavigator from "./UnAuthNavigator";
+import { useLoading } from "../Providers/loading";
+import AuthNavigator from "./AuthPages/AuthNavigator";
+import UnAuthNavigator from "./UnAuthPages/UnAuthNavigator";
+import { View } from "react-native";
 
 const Pages = () => {
     const { user } = useAuth();
-    
-    return user ?
-        <AuthNavigator /> :
-        <UnAuthNavigator />
+
+    return (
+        <View style={{ flex: 1, height: '100%', width: '100%' }}>
+            {user ?
+                <AuthNavigator /> :
+                <UnAuthNavigator />}
+        </View>)
 }
 
 export default Pages

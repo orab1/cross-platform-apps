@@ -1,8 +1,19 @@
-import Feed from "./Feed";
+import Feed from "./AuthPages/Feed";
 import { Feather, FontAwesome, MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
-import Login from "./Login/Login";
+import Login from "./UnAuthPages/Login/Login";
+import Register from "./UnAuthPages/Register/Register";
+import AddNewReview from './AuthPages/AddNewReview/AddNewReview'
 
-export const authRoutes = [
+export const authStackRoutes = [
+
+    {
+        name: 'AddNewReview',
+        component: AddNewReview,
+        showInTabs: false,
+    },
+]
+
+export const authTabRoutes = [
     {
         name: 'Movies',
         component: Feed,
@@ -37,6 +48,6 @@ export const unAuthRoutes = [
     },
     {
         name: 'Register',
-        component: Feed,
-    }
+        component: Register,
+    },
 ]

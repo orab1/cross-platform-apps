@@ -1,12 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { unAuthRoutes } from './routes';
+import { unAuthRoutes } from '../routes';
+import { Appbar, ProgressBar } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 
 const UnAuthNavigator = () =>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{
+        headerShown: false,
+    }}>
         {unAuthRoutes.map(({ name, component }) => (
             <Stack.Screen key={name} name={name} component={component} />
         ))}

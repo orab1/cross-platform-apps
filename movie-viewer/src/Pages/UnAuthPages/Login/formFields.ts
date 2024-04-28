@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { FormField } from "../../../Utils";
 
-const formFields = [
+const formFields: FormField[] = [
     {
         name: 'email',
         label: 'Email',
