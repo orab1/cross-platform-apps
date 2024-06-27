@@ -2,6 +2,7 @@
   "expo": {
     "name": "movie-viewer",
     "slug": "movie-viewer",
+    "scheme": "movie-viewer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

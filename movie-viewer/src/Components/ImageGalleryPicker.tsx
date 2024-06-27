@@ -1,34 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Button, Image, StyleSheet, View } from 'react-native';
+import { Button, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { HelperText } from 'react-native-paper';
 
-const ImageGalleryPicker: React.FC = ({ name: fieldName = '' }: { name?: string }) => {
+const ImageGalleryPicker: React.FC<{ name?: string, isProfile: boolean, width?: number, height?: number }> = ({ name: fieldName = '', isProfile = false, width = 200, height = 200 }) => {
     const { watch, setValue, formState: { errors } } = useFormContext();
-    const image = useWatch({ name: fieldName });
-
-    const getImagePermissions = async () => {
-        const { granted: originalPermissions } = await ImagePicker.getMediaLibraryPermissionsAsync();
-
-        if (!originalPermissions) {
-            const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (!granted) alert('Sorry, we need camera roll permissions to make this work!');
-        }
-    };
-
-    useEffect(() => {
-        getImagePermissions();
-    }, []);
-
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 4],
+            aspect: isProfile ? [4, 4] : [6, 4],
             quality: 1,
             allowsMultipleSelection: false
         });
@@ -41,8 +26,10 @@ const ImageGalleryPicker: React.FC = ({ name: fieldName = '' }: { name?: string 
     return (
         <View>
             {watch(fieldName) ?
-                <Image source={{ uri: watch(fieldName)! }} style={{ width: 200, height: 200 }} /> :
-                <MaterialCommunityIcons onPress={pickImage} name="image-plus" size={200} color="black" />
+                <TouchableOpacity onPress={pickImage}>
+                    <Image source={{ uri: watch(fieldName)! }} style={{ width, height, ...(isProfile && { borderRadius: 5 }) }} />
+                </TouchableOpacity> :
+                <MaterialCommunityIcons onPress={pickImage} name="image-plus" size={200} color="black" style={isProfile && { borderRadius: 5 }} />
             }
             {errors[fieldName] &&
                 <ErrorMessage

@@ -1,12 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './src/Providers/auth';
-import Pages from './src/Pages';
-import { Appbar } from 'react-native-paper';
 import { LoadingProvider } from './src/Providers/loading';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 import Root from './src';
+import { CacheProvider } from './src/Providers/cache';
 
 
 
@@ -14,14 +13,15 @@ const App = () =>
   <SafeAreaProvider>
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <LoadingProvider>
-          <AuthProvider>
-            <AutocompleteDropdownContextProvider>
-              
-              <Root />
-            </AutocompleteDropdownContextProvider>
-          </AuthProvider>
-        </LoadingProvider>
+        <CacheProvider>
+          <LoadingProvider>
+            <AuthProvider>
+              <AutocompleteDropdownContextProvider>
+                <Root />
+              </AutocompleteDropdownContextProvider>
+            </AuthProvider>
+          </LoadingProvider>
+        </CacheProvider>
       </SafeAreaView>
     </NavigationContainer>
   </SafeAreaProvider>;

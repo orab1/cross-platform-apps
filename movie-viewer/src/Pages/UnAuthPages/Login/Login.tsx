@@ -4,9 +4,8 @@ import { useForm, FieldValues, FormProvider } from 'react-hook-form';
 import TextField from '../../../Components/TextField';
 import { useAuth } from '../../../Providers/auth';
 import formFields, { loginSchema } from './formFields';
-import { Button, HelperText, ProgressBar } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ErrorMessage } from '@hookform/error-message';
 import { FirebaseError } from 'firebase/app';
 import { useNavigation } from '@react-navigation/native';
 import { getDefaultValues } from '../../../Utils';
@@ -69,8 +68,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center',
-        overflowY: 'auto'
+        alignItems: 'center'
     },
     formContainer: {
         height: '35%',

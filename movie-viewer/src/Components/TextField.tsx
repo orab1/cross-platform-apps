@@ -9,7 +9,7 @@ export interface TextFieldProps extends React.ComponentProps<typeof TextInput> {
     style?: any;
     defaultValue?: string;
     label?: string;
-    textContentType: | 'none'
+    textContentType?: | 'none'
     | 'emailAddress'
     | 'name'
     | 'telephoneNumber'
@@ -18,7 +18,7 @@ export interface TextFieldProps extends React.ComponentProps<typeof TextInput> {
     | 'newPassword'
     | 'birthdate';
     keyboardType?: KeyboardTypeOptions,
-    secureTextEntry: boolean
+    secureTextEntry?: boolean
 }
 
 const TextField: FC<TextFieldProps> = ({ name, style, label, textContentType = 'none', keyboardType = 'default', secureTextEntry = false, ...props }: TextFieldProps) => {

@@ -1,9 +1,8 @@
 import TextField from '../../../Components/TextField';
 import { useAuth } from '../../../Providers/auth';
 import formTextFields, { ImageGalleryPickerUri, registerSchema } from './formFields';
-import { Button, HelperText, Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ErrorMessage } from '@hookform/error-message';
 import { FirebaseError } from 'firebase/app';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -51,7 +50,7 @@ const Register = () => {
                                 />
                             </View>
                         )}
-                        <ImageGalleryPicker name={ImageGalleryPickerUri.name} />
+                        <ImageGalleryPicker name={ImageGalleryPickerUri.name} isProfile={true} />
                     </View>
                     <View style={styles.buttonContainer}>
                         <Button mode="contained" loading={isLoading} onPress={formMethods.handleSubmit(handleRegister)} style={styles.button}>

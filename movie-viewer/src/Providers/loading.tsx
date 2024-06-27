@@ -1,5 +1,5 @@
 
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, FC, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
 interface LoadingContextType {
     startLoading: () => number;
@@ -16,16 +16,20 @@ export const LoadingContext = createContext<LoadingContextType>({
 export const LoadingProvider: FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [loadings, setLoadings] = useState<Record<number, number>>({});
-
-    let loadingSequence = 1;
+    const loadingSequence = useRef<number>(1);
 
     useEffect(() => {
-        setIsLoading(Object.keys(loadings).length > 0);
+        setIsLoading(() => Object.keys(loadings).length > 0);
     }, [loadings]);
 
     const startLoading = () => {
-        setLoadings(lastLoadings => ({ ...lastLoadings, [loadingSequence]: loadingSequence }));
-        return loadingSequence++;
+        const id = loadingSequence.current;
+        setLoadings(lastLoadings => {
+            loadingSequence.current++;
+            return ({ ...lastLoadings, [id]: id })
+        });
+
+        return id;
     };
 
     const endLoading = (id: number) =>
