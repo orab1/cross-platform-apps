@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { initializeAuth } from 'firebase/auth';
+import { getAuth,  Persistence, setPersistence, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
 
@@ -10,11 +11,12 @@ const firebaseConfig = {
     projectId: "colam-apps",
     storageBucket: "colam-apps.appspot.com",
     messagingSenderId: "308160185299",
-    appId: "1:308160185299:web:d47b10e7aa7974ea3a2526",
+    appId: "1:308160185299:web:d47b10e7aa7974ea3a2526"
 };
 
 
 export const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-export const auth = initializeAuth(app);
+export const auth = getAuth(app);
 export const db = getDatabase(app);
 export const storage = getStorage(app);
+setPersistence(auth, getReactNativePersistence(ReactNativeAsyncStorage) as Persistence);

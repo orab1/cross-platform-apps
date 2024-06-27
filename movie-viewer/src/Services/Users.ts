@@ -1,36 +1,30 @@
-import { ref as dbRef, set } from "firebase/database";
+import { ref as dbRef, get, set } from "firebase/database";
 import { db } from "./firebase";
-import { getStorage, ref as storageRef, uploadBytes} from "firebase/storage";
+import { getDownloadURL, getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import { getPicture, uploadPicture } from "./Pictures";
 
-interface User {
+export interface User {
     name: { first: string, last: string };
     email: string;
     uId: string;
-    imageUri: string;
+    imageUri?: string;
 }
 
-const uriToBlob = async (uri: string) => {
-    const response = await fetch(uri);
-    return response.blob();
-};
+const uploadProfilePicture = async (uri: string, uId: string) => uploadPicture(uri, `${uId}`);
 
-const uploadProfilePicture = async (uri: string, uId: string) => {
+export const getUserPicture = (uId: string) => getPicture(`${uId}`);
+
+export const setUserInDB = async ({ imageUri, uId, ...user }: Partial<User>) => {
     try {
-        const profilePictureBlob = await uriToBlob(uri);
-        const profilePicturesRef = storageRef(getStorage(), `profilePictures/${uId}`);
-
-        await uploadBytes(profilePicturesRef, profilePictureBlob, { contentType: 'image/jpeg' });
-    } catch (error) {
-        console.error('Error uploading profile picture:', error);
-    }
-
-}
-
-export const createUserInDB = async ({ imageUri, uId, ...user }: User) => {
-    try {
-        await uploadProfilePicture(imageUri, uId);
         await set(dbRef(db, `users/${uId}`), { uId, ...user });
+        imageUri && await uploadProfilePicture(imageUri!, uId!);
     } catch (error) {
         console.error('Error creating user:', error);
     }
+}
+
+export const getUserById = async (uId: string) => {
+    const user = await get(dbRef(db, `users/${uId}`));
+
+    return user.val() as User;
 }

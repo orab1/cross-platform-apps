@@ -33,4 +33,16 @@ export const searchMovies = async (query: string) => {
     return results;
 }
 
+export const getMovieById = async (id: number) => {
+    const { data } = await movieApi.get(`/movie/${id}`);
+
+    return data as MovieDTO;
+}
+
+export const getPopularMovies = async (page: number) => {
+    const { data: { results } } = await movieApi.get(`/discover/movie?${qs.stringify({ sort_by: 'popularity.desc', page, include_adult: false, include_video: false, language: 'en-US' })}`);
+
+    return results as MovieDTO[];
+}
+
 export default movieApi;
