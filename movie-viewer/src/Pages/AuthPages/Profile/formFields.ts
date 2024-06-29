@@ -22,14 +22,6 @@ const formTextFields: FormField<string>[] = [
         validation: z.string()
             .min(2, 'Last name must be at least 2 characters long')
             .regex(/^[a-zA-Z]+$/, 'Last name must contain only letters')
-    },
-    {
-        name: 'email',
-        label: 'Email',
-        defaultValue: '',
-        textContentType: 'emailAddress',
-        keyboardType: 'email-address',
-        validation: z.string().email()
     }
 ];
 

@@ -23,11 +23,11 @@ const Profile = () => {
         defaultValues: convertAuthUserToDefaultValues(user!)
     });
 
-    const handleRegister = async ({ email, firstName, lastName, profilePicture }: FieldValues) => {
+    const handleRegister = async ({ firstName, lastName, profilePicture }: FieldValues) => {
         const id = startLoading();
 
         try {
-            await setUserInDB({ uId: user?.uId, email, name: { first: firstName, last: lastName }, imageUri: profilePicture });
+            await setUserInDB({ uId: user?.uId,  name: { first: firstName, last: lastName }, imageUri: profilePicture });
             await updateCache(user?.uId!!, 'user')
             await updateCache(user?.uId!!, 'image')
             alert('Profile updated successfully');

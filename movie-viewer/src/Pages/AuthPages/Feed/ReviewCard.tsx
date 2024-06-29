@@ -112,7 +112,10 @@ const ReviewCard = ({ review, theme }: { review: Review, theme: any }) => {
                         size={20}
                         mode="contained"
                         iconColor={theme.colors.secondary}
-                        onPress={() => deleteReviewById(review.id!)}
+                        onPress={async () => {
+                            await deleteReviewById(review.id!)
+                            alert('Review deleted successfully')
+                        }}
                     />
                 </Card.Actions>}
         </>}
